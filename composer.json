@@ -1,0 +1,22 @@
+{
+  "name": "labcoding/file-input",
+  "description": "ZF2 module for uploaded files",
+  "type": "library",
+  "license": "MIT",
+  "keywords": ["zf2", "upload", "upload files", "file service"],
+  "homepage": "https://github.com/labcoding/file-input",
+  "authors": [
+    {
+      "name": "D Bogdanovich",
+      "email": "d.bogdanovich@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "LabCoding\\FileInput\\": "src/"
+    }
+  }
+}

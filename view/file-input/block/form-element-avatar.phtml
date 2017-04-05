@@ -1,0 +1,112 @@
+<?php
+/** @var Zend\View\Model\ViewModel $viewModel */
+$viewModel = $this->viewModel()->getCurrent();
+$errors = $viewModel->getVariable('errors', []);
+
+$label = $viewModel->getVariable('label');
+if (!$label) {
+    $label = ucfirst($viewModel->getVariable('name', 'Input text'));
+}
+
+$class = $viewModel->getVariable('class');
+$values = $viewModel->getVariable('values', []);
+
+$name = $viewModel->getVariable('name');
+$value = $viewModel->getVariable('value');
+
+$fileName = $value;
+
+$fileInput = $this->fileInput('ChallengeCoverPhoto')
+    ->setPathParams(['id' => $viewModel->getVariable('values')['id']]);
+
+$value = $fileInput->getFile($value);
+
+$urlParams = [];
+if(isset($values['id'])) {
+    $urlParams = [
+        'id' => $values['id'],
+    ];
+}
+$uploadUrl = $this->url('upload-avatar', $urlParams);
+?>
+<div class="form-group <?= (!empty($errors)) ? 'has-error' : ''; ?> <?= $class; ?>">
+    <label><?= $label; ?></label>
+    <br/>
+    <div class="fileinput <?= (empty($viewModel->getVariable('value'))) ? 'fileinput-new' : 'fileinput-exists'; ?>" data-provides="fileinput">
+        <div class="fileinput-new thumbnail">
+            <img src="<?= $fileInput->getFile(null); ?>" alt="" />
+        </div>
+        <div class="fileinput-preview fileinput-exists thumbnail" >
+            <?php if(!empty($value)): ?>
+                <img src="<?= $value; ?>">
+            <?php endif; ?>
+        </div>
+        <div>
+            <span class="btn default btn-file">
+                <span class="fileinput-new">Select</span>
+                <span class="fileinput-exists">Change</span>
+                <input type="file" >
+                <input type="hidden" name="<?= $name; ?>" value="<?= $fileName; ?>">
+                <input id="crop_x" name="crop[x]" value="" type="hidden">
+                <input id="crop_y" name="crop[y]" value="" type="hidden">
+                <input id="crop_w" name="crop[w]" value="" type="hidden">
+                <input id="crop_h" name="crop[h]" value="" type="hidden">
+            </span>
+            <a href="javascript:;" class="btn default fileinput-exists" data-dismiss="fileinput">Remove</a>
+        </div>
+    </div>
+    <p class="help-block">
+        <?php if (!empty($errors)): ?>
+            <?php if (is_array($errors)): ?>
+                <?= implode('<br/> ', $errors); ?>
+            <?php else: ?>
+                <?= $errors; ?>
+            <?php endif; ?>
+        <?php endif; ?>
+    </p>
+</div>
+
+<div id="crop-modal" class="modal" tabindex="-1" aria-hidden="true" data-replace="true" data-url="<?= $uploadUrl; ?>">
+    <div class="modal-dialog" style="width: 750px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">
+                    Crop
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-8 img-container">
+                        <img src="" id="crop-avatar" alt="" style="height: auto !important; max-width: 500px;"/>
+                    </div>
+                    <div class="col-md-4">
+                        <div id="preview-pane" >
+                            <div class="preview-container">
+                                <img src="" class="img-preview" alt="" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 has-error">
+                        <p class="help-block"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="save">Crop</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php $this->headLink()->prependStylesheet($this->basePath('/plugins/cropper/dist/cropper.min.css')); ?>
+<?php $this->headScript()->appendFile($this->basePath('/plugins/cropper/dist/cropper.min.js')); ?>
+<?php $this->headLink()->prependStylesheet($this->basePath('/css/image-crop.css')); ?>
+
+<?php $this->headLink()->prependStylesheet($this->basePath(). '/plugins/bootstrap-fileinput/bootstrap-fileinput.css'); ?>
+<?php $this->headScript()->appendFile($this->basePath() . '/plugins/bootstrap-fileinput/bootstrap-fileinput.js'); ?>
+
+<?php $this->headScript()->appendFile($this->basePath('/js/avatar.js'), 'text/javascript'); ?>

@@ -1,0 +1,44 @@
+.btn.default:not(.btn-outline) {
+  background-color: #e1e5ec;
+  border-color: #e1e5ec;
+  color: #666;
+}
+.btn:not(.btn-sm):not(.btn-lg) {
+  line-height: 1.44;
+}
+.btn {
+  box-shadow: none !important;
+  outline: medium none !important;
+}
+
+/* Cubic Bezier Transition */
+/* Apply these styles only when #preview-pane has
+   been placed within the Jcrop widget */
+#preview-pane {
+  border: 1px rgba(0, 0, 0, 0.4) solid;
+  background-color: white;
+  -webkit-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+  height: 220px;
+  width: 220px;
+}
+
+/* The Javascript code will set the aspect ratio of the crop
+   area based on the size of the thumbnail preview,
+   specified here */
+#preview-pane .preview-container {
+  width: 220px;
+  height: 220px;
+  overflow: hidden;
+  margin: auto;
+}
+
+.fileinput .fileinput-new.thumbnail {
+  width: 220px;
+  height: 220px;
+}
+.fileinput .fileinput-preview.thumbnail {
+  max-width: 220px;
+  max-height: 220px;
+}

@@ -1,0 +1,33 @@
+<?php
+$viewModel = $this->viewModel()->getCurrent();
+
+$result = $viewModel->getVariable('result');
+//die(var_dump($viewModel->getVariables()));
+?>
+
+<section class="content-header">
+    <h1>File Input page</h1>
+    <div class="box">
+        <form class="" method="post" action="/file-input" enctype="multipart/form-data">
+            <div class="box-body">
+                <div class="form-group  ">
+                    <label class="">Name</label>
+                    <input name="name" placeholder="Enter name" value="test field" class="form-control" type="text">
+                </div>
+                <div class="form-group  ">
+                    <label class="">Image</label>
+                    <img src="<?= $this->fileInput('UserAvatar')
+                        ->setPathParams(['id' => $this->user()->getId()])
+                        ->getFile($result['name']); ?>"
+                         class="img-responsive" alt="">
+                    <input name="avatar" placeholder="Enter password" value="" class="" type="file">
+                </div>
+            </div>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary ">
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
