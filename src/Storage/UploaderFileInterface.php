@@ -23,4 +23,12 @@ interface UploaderFileInterface
      * @return mixed
      */
     public function rename($oldName, $newName);
+
+    /**
+     * Deletes a file
+     *
+     * @param string $file absolute path to file
+     * @return mixed
+     */
+    public function remove($file);
 }
