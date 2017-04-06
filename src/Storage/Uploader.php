@@ -39,8 +39,11 @@ class Uploader implements UploaderFileInterface
         $newFile = $this->directory . $file->getNameWithExtension();
 
         $result = $this->moveUploadedFile($file->getRealPath(), $newFile);
+        if($result == true) {
+            return $newFile;
+        }
 
-        return $result;
+        return null;
     }
 
     /**
@@ -57,6 +60,17 @@ class Uploader implements UploaderFileInterface
             $this->mkdir($dirName);
         }
         @rename($oldName, $newName);
+    }
+
+    /**
+     * Deletes a file
+     *
+     * @param string $file absolute path to file
+     * @return mixed
+     */
+    public function remove($file)
+    {
+        @unlink($file);
     }
 
     /**
