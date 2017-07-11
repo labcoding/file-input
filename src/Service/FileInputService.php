@@ -60,7 +60,7 @@ class FileInputService
     /**
      * @param mixed $params
      * @param array $changes
-     * @return array
+     * @return array|null
      */
     public function handle($params, $changes)
     {
@@ -73,6 +73,10 @@ class FileInputService
 
         if (isset($file['name']) == false || isset($file['tmp_name']) == false) {
             throw new \InvalidArgumentException("Invalid file array");
+        }
+
+        if(empty($file['name'])) {
+            return null;
         }
 
         $this->file = new File($file['tmp_name']);
