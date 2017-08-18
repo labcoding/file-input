@@ -81,7 +81,7 @@ class Path implements PathInterface
      *
      * @return string
      */
-    private static function fixPath($path)
+    public static function fixPath($path)
     {
         if (func_num_args() > 1) {
             return self::fixPath(implode(DIRECTORY_SEPARATOR, func_get_args()));
